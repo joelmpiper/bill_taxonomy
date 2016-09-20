@@ -1,13 +1,11 @@
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, Float, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
+import yaml
 
 # create the base class for the tables
 Base = declarative_base()
-
-dbname = 'bills_db'
-username = 'Joel'
 
 
 # create a class for the New York Bill table
@@ -34,6 +32,7 @@ class US_Bill(Base):
             "top_subject='%s,')>" % (self.bill_num, self.bill_name,
                                      self.bill_text, self.top_subject)
 
+
 class Bill_Subject(Base):
     __tablename__ = 'bill_subject'
     bill_num = Column(String, primary_key=True)
@@ -44,8 +43,59 @@ class Bill_Subject(Base):
             self.bill_num, self.subject)
 
 
+class Subject_Score(Base):
+    __tablename__ = 'table_score'
+    subject = Column(String, primary_key=True)
+    bill_num = Column(String, primary_key=True)
+    score = Column(Float)
+
+    def __repr__(self):
+        return "<Subject_Score(subject='%s', bill_num='%s', score='%d')>" % (
+            self.subject, self.bill_num, self.score)
+
+
+class Subject_Logistic_Score(Base):
+    __tablename__ = 'subject_logistic_score'
+    subject = Column(String, primary_key=True)
+    bill_num = Column(String, primary_key=True)
+    score = Column(Float)
+
+    def __repr__(self):
+        return ("<Subject_Logistic_Score(subject='%s', bill_num='%s'," +
+                " score='%d')>" % (self.subject, self.bill_num, self.score))
+
+
+class US_Score(Base):
+    __tablename__ = 'us_score'
+    subject = Column(String, primary_key=True)
+    bill_num = Column(String, primary_key=True)
+    actual = Column(Boolean)
+    score = Column(Float)
+
+    def __repr__(self):
+        return "<US_Score(subject='%s', bill_num='%s', score='%d')>" % (
+            self.subject, self.bill_num, self.score)
+
+
+class NY_Score(Base):
+    __tablename__ = 'ny_score'
+    subject = Column(String, primary_key=True)
+    bill_num = Column(String, primary_key=True)
+    score = Column(Float)
+
+    def __repr__(self):
+        return "<NY_Score(subject='%s', bill_num='%s', score='%d')>" % (
+            self.subject, self.bill_num, self.score)
+
+
 # Setup the database
 def make_database():
+
+    with open("./configs.yml", 'r') as ymlfile:
+        cfg = yaml.load(ymlfile)
+
+    dbname = cfg['dbname']
+    username = cfg['username']
 
     engine = create_engine('postgres://%s@localhost/%s' % (username, dbname))
 
