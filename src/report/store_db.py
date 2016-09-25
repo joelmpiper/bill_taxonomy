@@ -6,7 +6,11 @@ from src.ingest.setup_database import NY_Score
 
 def store_us_db(dbname, bills, subject, y_prob, y_true, cfg):
 
+    if (subject.split(' ')[0] == 'Bank'):
+        subject.replace('capital', 'and capital')
     subject = subject.replace(' ', '_')
+    subject = subject.replace(',', '')
+
     host = cfg['dbwrite_host']
     dbwrite_user = cfg['dbwrite_user']
     engine = create_engine('postgres://%s@%s/%s' % (dbwrite_user, host, dbname))
@@ -31,7 +35,11 @@ def store_us_db(dbname, bills, subject, y_prob, y_true, cfg):
 
 def store_ny_db(dbname, bills, subject, y_prob, cfg):
 
+    if (subject.split(' ')[0] == 'Bank'):
+        subject.replace('capital', 'and capital')
     subject = subject.replace(' ', '_')
+    subject = subject.replace(',', '')
+
     host = cfg['dbwrite_host']
     dbwrite_user = cfg['dbwrite_user']
     engine = create_engine('postgres://%s@%s/%s' % (dbwrite_user, host, dbname))
