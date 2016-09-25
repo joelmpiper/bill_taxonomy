@@ -48,10 +48,13 @@ class Subject_Score(Base):
     subject = Column(String, primary_key=True)
     bill_num = Column(String, primary_key=True)
     score = Column(Float)
+    logistic = Column(Float)
 
     def __repr__(self):
-        return "<Subject_Score(subject='%s', bill_num='%s', score='%d')>" % (
-            self.subject, self.bill_num, self.score)
+        ret_string = ("<Subject_Score(subject={0}, bill_num={1}, score={2}, "
+                      "logistic={3})>")
+        return ret_string.format(self.subject, self.bill_num, self.score,
+                                 self.logistic)
 
 
 class Subject_Logistic_Score(Base):
@@ -71,10 +74,13 @@ class US_Score(Base):
     bill_num = Column(String, primary_key=True)
     actual = Column(Boolean)
     score = Column(Float)
+    logistic = Column(Float)
 
     def __repr__(self):
-        return "<US_Score(subject='%s', bill_num='%s', score='%d')>" % (
-            self.subject, self.bill_num, self.score)
+        ret_string = ("<US_Score(subject={0}, bill_num={1}, score={2}, "
+                      "logistic={3}, actual={4})>")
+        return ret_string.format(self.subject, self.bill_num, self.score,
+                                 self.logistic, self.actual)
 
 
 class NY_Score(Base):
@@ -82,10 +88,13 @@ class NY_Score(Base):
     subject = Column(String, primary_key=True)
     bill_num = Column(String, primary_key=True)
     score = Column(Float)
+    logistic = Column(Float)
 
     def __repr__(self):
-        return "<NY_Score(subject='%s', bill_num='%s', score='%d')>" % (
-            self.subject, self.bill_num, self.score)
+        ret_string = ("<NY_Score(subject={0}, bill_num={1}, score={2}, "
+                      "logistic={3})>")
+        return ret_string.format(self.subject, self.bill_num, self.score,
+                                 self.logistic)
 
 
 # Setup the database

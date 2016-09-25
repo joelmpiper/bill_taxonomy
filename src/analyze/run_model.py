@@ -4,8 +4,7 @@ from sklearn.svm import SVC
 from sklearn.grid_search import GridSearchCV
 from sklearn.naive_bayes import MultinomialNB
 from src.wrangle.make_params import make_param_entries
-
-import datetime
+from src.utils.get_time_stamp import get_time_stamp
 import pickle
 
 
@@ -16,8 +15,9 @@ def create_model(feat_un, model_name, feat_grid, cfg):
     scoring = cfg['scoring']
     verbose = cfg['verbose']
     folds = cfg['folds']
+    njobs = cfg['njobs']
     grid_search = GridSearchCV(pipeline, cv=folds, param_grid=param_dict,
-                               scoring=scoring, verbose=verbose)
+                               scoring=scoring, verbose=verbose, n_jobs=njobs)
     return grid_search
 
 
@@ -50,7 +50,7 @@ def run_model(model, X, y, sub, cfg):
 
 def save_result(obj, X, y, sub, cfg):
 
-    file_time = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+    file_time = get_time_stamp()
     if(cfg['also_save_data']):
 
         save_string = cfg['model_dir'] + 'data_model_' + sub + '_' + \
