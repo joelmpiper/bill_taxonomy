@@ -6,6 +6,7 @@ import pandas as pd
 import psycopg2
 import yaml
 from a_Model import ModelIt
+from flaskexample.support_functions import formatted_query
 
 ymlfile = open("../configs.yml", 'r')
 cfg = yaml.load(ymlfile)
@@ -99,11 +100,12 @@ def ny_bills_output():
     q_fill = q_str.format(subject)
     query_results = pd.read_sql_query(q_fill, con)
 
-    bills = []
-    for i in range(0, query_results.shape[0]):
-        bills.append(dict(bill_num=query_results.iloc[i]['bill_num'],
-                          bill_name=query_results.iloc[i]['bill_name'],
-                          score=query_results.iloc[i]['logistic']))
+    bills = formatted_query(query_results, 'logistic')
+    # bills = []
+    # for i in range(0, query_results.shape[0]):
+    #    bills.append(dict(bill_num=query_results.iloc[i]['bill_num'],
+    #                      bill_name=query_results.iloc[i]['bill_name'],
+    #                      score=query_results.iloc[i]['logistic']))
 
     the_result = ModelIt(subject, bills)
     return render_template("ny_bills_output.html",
