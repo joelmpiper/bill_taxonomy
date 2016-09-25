@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>identifyabill.site</title>
+    <title>Starter Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
@@ -42,46 +42,38 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Subject Search of Bills Introduced by New York Legislatures</a>
+          <a class="navbar-brand" href="#">Project name</a>
         </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
       </div>
     </nav>
 
 <br><br>
-
-<h1 align="center"> IdentifyABill: Find Bills Introduced in the New York Legislature by Topic </h1>
-
 <div class="container">
 
-    
     <div class="starter-template">
-        <h2 align="center">Select the Subject Term Below</h2>
+        <h2>Input Page</h2>
+        <p>Enter some user input</p>
     </div>
 
     <div class = "container">
 
-      <form  align="center" action="/ny_bills_output" method="GET">
-	<table style="width:100%">
-		<col align="center">
-		<col align="center">
-		<col align="center">
-	<tr>
-		<th> <button style="background-color:lightgreen;height:50px;width:200px" name="subject" type="submit" value="&#39;Health&#39;">Health</button></th>
-		<th> <button style="background-color:lightgreen;height:50px;width:200px" name="subject" type="submit" value="&#39;Taxation&#39;">Taxation</button></th>
-		<th> <button style="background-color:lightgreen;height:50px;width:200px" name="subject" type="submit" value="&#39;Competition_and_antitrust&#39;">Antitrust</button></th>
-	</tr>
-		
-	<tr>
-		<th> <button style="background-color:lightblue;height:50px;width:200px" name="subject" type="submit" value="&#39;Bankruptcy&#39;">Bankruptcy</button></th>
-		<th> <button style="background-color:lightblue;height:50px;width:200px" name="subject" type="submit" value="&#39;Employee_benefits_and_pensions&#39;">Employee Benefits</button></th>
-		<th> <button style="background-color:lightblue;height:50px;width:200px" name="subject" type="submit" value="&#39;Intellectual_property&#39;">Intellectual Property</button></th>
-	</tr>
+      <form  action="/output" method="GET">
+        <div class="form-group">
+          <label for="birth_month">Birth Month:</label>
+          <input type="text" id="birth_month" name='birth_month' placeholder="e.g. ">
+        </div>
 
-	<tr>
-		<th> <button style="background-color:yellow;height:50px;width:200px" name="subject" type="submit" value="&#39;Labor_and_employment&#39;">Labor and Employment</button></th>
-		<th> <button style="background-color:yellow;height:50px;width:200px" name="subject" type="submit" value="&#39;Securities&#39;">Securities</button></th>
-		<th> <button style="background-color:yellow;height:50px;width:200px" name="subject" type="submit" value="&#39;Bank_accounts_deposits_and_capital&#39;">Banking and Finance</button></th>
-	</tr>
+        <div>
+          <button type="submit" class="btn btn-default btn-lg">Find these Cesareans!</button>
+        </div>
+
       </form>
     </div>
 

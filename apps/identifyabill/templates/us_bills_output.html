@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>identifyabill.site</title>
+    <title>Relevant Bills</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
@@ -33,23 +33,9 @@
 
   <body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Subject Search of Bills Introduced by New York Legislatures</a>
-        </div>
-      </div>
-    </nav>
 
-<br><br>
 
-<h1 align="center"> IdentifyABill: Find Bills Introduced in the New York Legislature by Topic </h1>
+<h1 align="center"> IdentifyABill: Find Bills Introduced in the 114th United States Congress</h1>
 
 <div class="container">
 
@@ -60,7 +46,7 @@
 
     <div class = "container">
 
-      <form  align="center" action="/ny_bills_output" method="GET">
+      <form  align="center" action="/us_bills_output" method="GET">
 	<table style="width:100%">
 		<col align="center">
 		<col align="center">
@@ -85,10 +71,36 @@
       </form>
     </div>
 
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="static/js/bootstrap.min.js"></script>
+<br><br>
 
-  </div> <!-- /.container-->
+    <div class="container">
+      <div class="starter-template">
+        <h3>Results:</h3>
+	<p class="lead">Below is the result of your query.<br></p> 
+      </div>
+
+      <table class="table table-hover">
+      <tr><th>Bill Number</th><th>Bill Title</th><th>Score</th></tr>
+      {% for bill in bills %}
+      <tr><td><a href="https://www.nysenate.gov/search/global/{{ bill['bill_num']}}">{{bill['bill_num']}}</a> </td><td>{{ bill['bill_name']}}</td><td> {{ bill['score'] }}</td></tr>
+      {% endfor %}
+      </table>
+
+
+     </div><!-- /.container -->
+
+    <div class="container">
+      <div class="starter-template">
+        <h3>Another Result:</h3>
+        <p class="lead">Now we've taken the input and called a function from your package.<br>The result is {{the_result}}</p>
+      </div>
+
+
+      <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+      <script src="static/js/bootstrap.min.js"></script>
+
+
+     </div><!-- /.container -->
 
 
  <!-- Bootstrap core JavaScript
