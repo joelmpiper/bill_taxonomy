@@ -4,6 +4,7 @@ from flaskexample import app
 from sqlalchemy import create_engine
 import pandas as pd
 import psycopg2
+import yaml
 from a_Model import ModelIt
 
 ymlfile = open("../configs.yml", 'r')
