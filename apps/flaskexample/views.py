@@ -6,7 +6,7 @@ import pandas as pd
 import psycopg2
 from a_Model import ModelIt
 
-ymlfile = open("configs.yml", 'r')
+ymlfile = open("../configs.yml", 'r')
 cfg = yaml.load(ymlfile)
 ymlfile.close()
 
