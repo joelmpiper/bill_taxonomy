@@ -6,9 +6,13 @@ import pandas as pd
 import psycopg2
 from a_Model import ModelIt
 
-user = 'Joel'  # add your username here (same as previous postgreSQL)
+ymlfile = open("configs.yml", 'r')
+cfg = yaml.load(ymlfile)
+ymlfile.close()
+
+dbname = cfg['dbname']
+user = cfg['username']
 host = 'localhost'
-dbname = 'bills_db'
 db = create_engine('postgres://%s%s/%s' % (user, host, dbname))
 con = None
 con = psycopg2.connect(database=dbname, user=user)
