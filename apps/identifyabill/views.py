@@ -46,6 +46,7 @@ def ny_bills_output():
     WHERE ts.subject={0}
     AND ts.logistic IS NOT NULL
     ORDER BY ts.logistic DESC
+    LIMIT 100
     """
     q_fill = q_str.format(subject)
     query_results = pd.read_sql_query(q_fill, con)
