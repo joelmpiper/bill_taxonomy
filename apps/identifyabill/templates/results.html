@@ -40,6 +40,8 @@
 					<div class="btn-group btn-group-justified">
 						<div class="btn-group">
 							<button class="btn btn-primary btn-lg", name="subject", value="&#39;Health&#39;"><h4>Health</h4></button>
+							<input type="hidden" name="offset" value="0" />
+							
 						</div>
 					</div>
 					</tr>
@@ -49,6 +51,7 @@
 					<div class="btn-group btn-group-justified">
 						<div class="btn-group">
 							<button class="btn btn-success btn-lg", name="subject", value="&#39;Taxation&#39;"><h4>Taxation</h4></button>
+							<input type="hidden" name="offset" value="0" />
 						</div>
 
 					</div>
@@ -59,6 +62,7 @@
 					<div class="btn-group btn-group-justified">
 						<div class="btn-group">
 							<button class="btn btn-info btn-lg", name="subject", value="&#39;Competition_and_antitrust&#39;"><h4>Antitrust</h4></button>
+							<input type="hidden" name="offset" value="0" />
 						</div>
 					</div>
 					</tr>
@@ -69,6 +73,7 @@
 					<div class="btn-group btn-group-justified">
 						<div class="btn-group">
 							<button class="btn btn-primary btn-lg", name="subject", value="&#39;Bankruptcy&#39;"><h4>Bankruptcy</h4></button>
+							<input type="hidden" name="offset" value="0" />
 						</div>
 
 					</div>
@@ -79,6 +84,7 @@
 					<div class="btn-group btn-group-justified">
 						<div class="btn-group">
 							<button class="btn btn-success btn-lg", name="subject", value="&#39;Employee_benefits_and_pensions&#39;"><h4>Employee Benefits</h4></button>
+							<input type="hidden" name="offset" value="0" />
 						</div>
 
 					</div>
@@ -89,6 +95,7 @@
 					<div class="btn-group btn-group-justified">
 						<div class="btn-group">
 							<button class="btn btn-info btn-lg", name="subject", value="&#39;Intellectual_property&#39;"><h4>Intellectual Property</h
+							<input type="hidden" name="offset" value="0" />
 						</div>
 					</div>
 					</tr>
@@ -99,6 +106,7 @@
 					<div class="btn-group btn-group-justified">
 						<div class="btn-group">
 							<button class="btn btn-primary", name="subject" value="&#39;Labor_and_employment&#39;"><h4>Labor and Employment</h4></button>
+							<input type="hidden" name="offset" value="0" />
 						</div>
 
 					</div>
@@ -109,6 +117,7 @@
 					<div class="btn-group btn-group-justified">
 						<div class="btn-group">
 							<button class="btn btn-success", name="subject" value="&#39;Securities&#39;"><h4>Securities</h4></button>
+							<input type="hidden" name="offset" value="0" />
 						</div>
 
 					</div>
@@ -119,6 +128,7 @@
 					<div class="btn-group btn-group-justified">
 						<div class="btn-group">
 							<button class="btn btn-info", name="subject", value="&#39;Bank_accounts_deposits_and_capital&#39;"><h4>Banking</h4></button>
+							<input type="hidden" name="offset" value="0" />
 						</div>
 					</div>
 					</tr>
@@ -161,6 +171,19 @@
 				      </table>
 				</div>
 			</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<form action="/results" method="GET">
+			<div class="bs-example">
+				<ul class="pager">
+					<button class="btn btn-primary btn-lg", name="offset", value="{{ offset|int - 20 }}">Previous</button>
+					<button class="btn btn-primary btn-lg", name="offset", value="{{ offset|int + 20 }}">Next</button>
+					<input type="hidden" name="subject" value="{{ subject }}" />
+				</ul>
+			</div>
+			</form>
 		</div>
 	</div>
     </div>
