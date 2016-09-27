@@ -58,7 +58,16 @@ def ny_bills_output():
     #                      bill_name=query_results.iloc[i]['bill_name'],
     #                      score=query_results.iloc[i]['logistic']))
 
-    return render_template("results.html", bills=bills)
+    conversion_dict = {"'Health'": 'Health', "'Taxation'": 'Taxation',
+                       "'Competition_and_antitrust'": 'Antitrust',
+                       "'Employee_benefits_and_pensions'": 'Employee Benefits',
+                       "'Bankruptcy'": 'Bankruptcy',
+                       "'Intellectual_property'": 'Intellectual Property',
+                       "'Labor_and_employment'": 'Labor and Employment',
+                       "'Securities'": 'Securities',
+                       "'Bank_accounts_deposits_and_capital'": 'Banking'}
+    return render_template("results.html", bills=bills, cdict=conversion_dict,
+                           subject=subject)
 
 
 @app.route('/us_bills_output')
