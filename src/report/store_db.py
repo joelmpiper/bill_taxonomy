@@ -36,7 +36,7 @@ def store_us_db(dbname, bills, subject, y_prob, y_true, cfg):
 def store_ny_db(dbname, bills, subject, y_prob, cfg):
 
     if (subject.split(' ')[0] == 'Bank'):
-        subject.replace('capital', 'and capital')
+        subject = subject.replace('capital', 'and capital')
     subject = subject.replace(' ', '_')
     subject = subject.replace(',', '')
 
