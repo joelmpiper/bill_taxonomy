@@ -43,7 +43,7 @@ def main(*argv):
             store_us_db(dbname, us_bills, sub, y_probs_us, y, cfg)
 
         if(cfg['store_ny']):
-            ny_bills = get_ny_bills(dbname, username, ny_bills_subset)
+            ny_bills = get_ny_bills(dbname, username)
             X_ny = make_x_values(ny_bills)
             y_probs_ny = get_y_probs(fit_mod, X_ny)
             store_ny_db(dbname, ny_bills, sub, y_probs_ny, cfg)
