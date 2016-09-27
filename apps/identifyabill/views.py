@@ -4,10 +4,16 @@ from identifyabill import app
 from sqlalchemy import create_engine
 import pandas as pd
 import psycopg2
+import yaml
+from identifyabill.support_functions import formatted_query
 
-user = 'Joel'  # add your username here (same as previous postgreSQL)
+ymlfile = open("../configs.yml", 'r')
+cfg = yaml.load(ymlfile)
+ymlfile.close()
+
+dbname = cfg['dbname']
+user = cfg['username']
 host = 'localhost'
-dbname = 'bills_db'
 db = create_engine('postgres://%s%s/%s' % (user, host, dbname))
 con = None
 con = psycopg2.connect(database=dbname, user=user)
@@ -16,13 +22,8 @@ con = psycopg2.connect(database=dbname, user=user)
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template("index.html", title='Home',
+    return render_template("index.html", title='Identifyabill.site',
                            user={'nickname': 'Joel'},)
-
-
-@app.route('/ny_bill_input')
-def ny_bills_input():
-    return render_template("ny_bill_input.html")
 
 
 @app.route('/us_bill_input')
@@ -30,7 +31,7 @@ def us_bills_input():
     return render_template("us_bill_input.html")
 
 
-@app.route('/ny_bills_output')
+@app.route('/results')
 def ny_bills_output():
     # pull 'subject' from input field and store it
     subject = request.args.get('subject')
@@ -45,19 +46,18 @@ def ny_bills_output():
     WHERE ts.subject={0}
     AND ts.logistic IS NOT NULL
     ORDER BY ts.logistic DESC
-    LIMIT 100;
     """
     q_fill = q_str.format(subject)
     query_results = pd.read_sql_query(q_fill, con)
 
-    bills = []
-    for i in range(0, query_results.shape[0]):
-        bills.append(dict(bill_num=query_results.iloc[i]['bill_num'],
-                          bill_name=query_results.iloc[i]['bill_name'],
-                          score=query_results.iloc[i]['logistic']))
+    bills = formatted_query(query_results, 'logistic')
+    # bills = []
+    # for i in range(0, query_results.shape[0]):
+    #    bills.append(dict(bill_num=query_results.iloc[i]['bill_num'],
+    #                      bill_name=query_results.iloc[i]['bill_name'],
+    #                      score=query_results.iloc[i]['logistic']))
 
-    return render_template("ny_bills_output.html",
-                           bills=bills)
+    return render_template("results.html", bills=bills)
 
 
 @app.route('/us_bills_output')
@@ -86,8 +86,7 @@ def us_bills_output():
                           bill_name=query_results.iloc[i]['bill_name'],
                           score=query_results.iloc[i]['logistic']))
 
-    return render_template("us_bills_output.html",
-                           bills=bills)
+    return render_template("us_bills_output.html", bills=bills)
 
 
 @app.route('/lda_topics')

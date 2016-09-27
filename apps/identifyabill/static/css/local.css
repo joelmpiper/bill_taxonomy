@@ -176,6 +176,7 @@ table {
 }
 td,
 th {
+  text-align: center;
   padding: 0;
 }
 @media print {
@@ -1397,7 +1398,7 @@ table {
   background-color: #181818;
 }
 th {
-  text-align: left;
+  text-align: center;
 }
 .table {
   width: 100%;

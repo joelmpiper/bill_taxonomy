@@ -29,7 +29,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="text-center">
@@ -39,8 +38,8 @@
 		</div>
 
 		<div class="row">
-			<div class="col-lg-12" >  
-				<form action="/results" method="GET">
+			<div class="col-lg-12">  
+				<form action="/results#res" method="GET">
 					<p>
 						<div class="table-responsive">
 							<table class="table">
@@ -48,29 +47,13 @@
 							<tr>
 							<div class="btn-group btn-group-justified">
 								<div class="btn-group">
-								<button class="btn btn-primary btn-lg", name="subject", value="&#39;Health&#39;">Health</button>
+									<button class="btn btn-primary btn-lg", name="subject", value="&#39;Health&#39;"><h3>Health</h3></button>
 								</div>
 								<div class="btn-group">
-								<button class="btn btn-success btn-lg", name="subject", value="&#39;Taxation&#39;">Taxation</button>
+									<button class="btn btn-success btn-lg", name="subject", value="&#39;Taxation&#39;"><h3>Taxation</h3></button>
 								</div>
 								<div class="btn-group">
-								<button class="btn btn-info btn-lg", name="subject", value="&#39;Competition_and_antitrust&#39;">Antitrust</button>
-								</div>
-							</div>
-							</tr>
-							</p>
-
-							<p>
-							<tr>
-							<div class="btn-group btn-group-justified">
-								<div class="btn-group">
-								<button class="btn btn-primary btn-lg", name="subject", value="&#39;Bankruptcy&#39;">Bankruptcy</button>
-								</div>
-								<div class="btn-group">
-								<button class="btn btn-success btn-lg", name="subject", value="&#39;Employee_benefits_and_pensions&#39;">Employee Benefits</button>
-								</div>
-								<div class="btn-group">
-									<button class="btn btn-info btn-lg", name="subject", value="&#39;Intellectual_property&#39;">Intellectual Property</button>
+									<button class="btn btn-info btn-lg", name="subject", value="&#39;Competition_and_antitrust&#39;"><h3>Antitrust</h3></button>
 								</div>
 							</div>
 							</tr>
@@ -80,13 +63,29 @@
 							<tr>
 							<div class="btn-group btn-group-justified">
 								<div class="btn-group">
-								<button class="btn btn-primary btn-lg", name="subject" value="&#39;Labor_and_employment&#39;">Labor and Employment</button>
+									<button class="btn btn-primary btn-lg", name="subject", value="&#39;Bankruptcy&#39;"><h3>Bankruptcy</h3></button>
 								</div>
 								<div class="btn-group">
-								<button class="btn btn-success btn-lg", name="subject" value="&#39;Securities&#39;">Securities</button>
+									<button class="btn btn-success btn-lg", name="subject", value="&#39;Employee_benefits_and_pensions&#39;"><h3>Employee Benefits</h3></button>
 								</div>
 								<div class="btn-group">
-								<button class="btn btn-info btn-lg", name="subject", value="&#39;Bank_accounts_deposits_and_capital&#39;">Banking</button>
+									<button class="btn btn-info btn-lg", name="subject", value="&#39;Intellectual_property&#39;"><h3>Intellectual Property</h3></button>
+								</div>
+							</div>
+							</tr>
+							</p>
+
+							<p>
+							<tr>
+							<div class="btn-group btn-group-justified">
+								<div class="btn-group">
+									<button class="btn btn-primary btn-lg", name="subject" value="&#39;Labor_and_employment&#39;"><h3>Labor and Employment</h3></button>
+								</div>
+								<div class="btn-group">
+									<button class="btn btn-success btn-lg", name="subject" value="&#39;Securities&#39;"><h3>Securities</h3></button>
+								</div>
+								<div class="btn-group">
+									<button class="btn btn-info btn-lg", name="subject", value="&#39;Bank_accounts_deposits_and_capital&#39;"><h3>Banking</h3></button>
 								</div>
 							</div>
 							</tr>
@@ -96,6 +95,33 @@
 				</form>
 			</div>
 		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12" >  
+			<p>
+				<div class="table-responsive, table-bordered">
+					<table id="res", class="table", align="center"> 
+						<thead>
+						      <tr>
+							      <th><h3>Bill Number</h3></th>
+							      <th><h3>Bill Title</h3></th>
+							      <th><h3>Score</h3></th>
+						      </tr>
+						</thead>
+						<tbody>
+						{% for bill in bills %}
+						<tr><td align="center">
+							{% for num in bill['bill_num'].split(',') %}
+							<a href="https://www.nysenate.gov/search/global/{{ num }}"><h4> {{num}}</h4></a>
+							{% endfor %}
+				       			</td><td><h4>{{ bill['bill_name']}}</h4></td><td> <h4>{{ bill['score'] }}</h4></td></tr>
+						{% endfor %}
+						</tbody>
+				      </table>
+				</div>
+			</p>
+		</div>
+	</div>
     </div>
     <!-- /#wrapper -->
 </body>
