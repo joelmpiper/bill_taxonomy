@@ -62,6 +62,9 @@ def save_result(obj, X, y, sub, cfg):
     pickle.dump(obj, open(save_string, 'wb'))
 
 
-def get_y_probs(fit_mod, X):
+def get_y_probs(fit_mod, X, cfg):
 
-    return fit_mod.predict_proba(X)[:, 1]
+    if (cfg['model_type'] == 'svc'):
+        return fit_mod.decision_function(X)[:, 1]
+    else:
+        return fit_mod.predict_proba(X)[:, 1]

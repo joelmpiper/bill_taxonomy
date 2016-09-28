@@ -49,14 +49,14 @@ def main(*argv):
             results.append(fit_mod)
 
             if(cfg['store_us']):
-                y_probs_us = get_y_probs(fit_mod, X)
+                y_probs_us = get_y_probs(fit_mod, X, cfg)
                 store_us_db(dbname, us_bills, sub, y_probs_us, y, cfg)
 
             if(cfg['store_ny']):
                 ny_bills_subset = cfg['ny_bills_subset']
                 ny_bills = get_ny_bills(dbname, username, ny_bills_subset)
                 X_ny = make_x_values(ny_bills)
-                y_probs_ny = get_y_probs(fit_mod, X_ny)
+                y_probs_ny = get_y_probs(fit_mod, X_ny, cfg)
                 store_ny_db(dbname, ny_bills, sub, y_probs_ny, cfg)
 
         return results
