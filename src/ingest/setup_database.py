@@ -1,116 +1,57 @@
-from sqlalchemy import Column, String, Float, Boolean
-from sqlalchemy.ext.declarative import declarative_base
+import os
+import logging
 from sqlalchemy import create_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
 from sqlalchemy_utils import database_exists, create_database
 import yaml
 
-# create the base class for the tables
+# Setup logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Load Base and table classes
 Base = declarative_base()
+from table_definitions import NewYorkBills, UsBills, BillSubjects  # Assuming these are defined in table_definitions.py
 
+def load_config():
+    # Adjust the path if needed to match the Docker container's directory structure
+    config_path = '/code/configs/postgres_setup.yml'  # Example path inside Docker
+    with open(config_path, 'r') as file:
+        return yaml.safe_load(file)
 
-# create a class for the New York Bill table
-class New_York_Bill(Base):
-    __tablename__ = 'ny_bills'
-    bill_num = Column(String, primary_key=True)
-    bill_name = Column(String)
-    bill_text = Column(String)
-
-    def __repr__(self):
-        return "<New_York_Bill(bill_num='%s', bill_name='%s', bill_text='%s')>"\
-            % (self.bill_num, self.bill_name, self.bill_text)
-
-
-class US_Bill(Base):
-    __tablename__ = 'us_bills'
-    bill_num = Column(String, primary_key=True)
-    bill_name = Column(String)
-    bill_text = Column(String)
-    top_subject = Column(String)
-
-    def __repr__(self):
-        return "<US_Bill(bill_num='%s', bill_name='%s', bill_text='%s,'," + \
-            "top_subject='%s,')>" % (self.bill_num, self.bill_name,
-                                     self.bill_text, self.top_subject)
-
-
-class Bill_Subject(Base):
-    __tablename__ = 'bill_subject'
-    bill_num = Column(String, primary_key=True)
-    subject = Column(String, primary_key=True)
-
-    def __repr__(self):
-        return "<Bill_Subject(bill_num='%s', subject='%s')>" % (
-            self.bill_num, self.subject)
-
-
-class Subject_Score(Base):
-    __tablename__ = 'table_score'
-    subject = Column(String, primary_key=True)
-    bill_num = Column(String, primary_key=True)
-    score = Column(Float)
-    logistic = Column(Float)
-
-    def __repr__(self):
-        ret_string = ("<Subject_Score(subject={0}, bill_num={1}, score={2}, "
-                      "logistic={3})>")
-        return ret_string.format(self.subject, self.bill_num, self.score,
-                                 self.logistic)
-
-
-class Subject_Logistic_Score(Base):
-    __tablename__ = 'subject_logistic_score'
-    subject = Column(String, primary_key=True)
-    bill_num = Column(String, primary_key=True)
-    score = Column(Float)
-
-    def __repr__(self):
-        return ("<Subject_Logistic_Score(subject='%s', bill_num='%s'," +
-                " score='%d')>" % (self.subject, self.bill_num, self.score))
-
-
-class US_Score(Base):
-    __tablename__ = 'us_score'
-    subject = Column(String, primary_key=True)
-    bill_num = Column(String, primary_key=True)
-    actual = Column(Boolean)
-    score = Column(Float)
-    logistic = Column(Float)
-
-    def __repr__(self):
-        ret_string = ("<US_Score(subject={0}, bill_num={1}, score={2}, "
-                      "logistic={3}, actual={4})>")
-        return ret_string.format(self.subject, self.bill_num, self.score,
-                                 self.logistic, self.actual)
-
-
-class NY_Score(Base):
-    __tablename__ = 'ny_score'
-    subject = Column(String, primary_key=True)
-    bill_num = Column(String, primary_key=True)
-    score = Column(Float)
-    logistic = Column(Float)
-
-    def __repr__(self):
-        ret_string = ("<NY_Score(subject={0}, bill_num={1}, score={2}, "
-                      "logistic={3})>")
-        return ret_string.format(self.subject, self.bill_num, self.score,
-                                 self.logistic)
-
-
-# Setup the database
 def make_database():
+    config = load_config()
 
-    with open("./configs.yml", 'r') as ymlfile:
-        cfg = yaml.load(ymlfile)
+    # Print all environment variables
+    for key, value in os.environ.items():
+        print(f"{key}: {value}")
+    # Directly use environment variables, no prefix needed
+    user = os.getenv('DB_USERNAME')
+    password = os.getenv('DB_PASSWORD')
+    host = os.getenv('DB_HOST', 'postgres')  # Default to 'postgres' if not set
+    port = os.getenv('DB_PORT', '5432')  # Default port if not set
+    dbname = os.getenv('DB_NAME')
+    db_url = f'postgresql://{user}:{password}@{host}:{port}/{dbname}'
 
-    dbname = cfg['dbname']
-    username = cfg['username']
+    try:
+        engine = create_engine(db_url)
 
-    engine = create_engine('postgres://%s@localhost/%s' % (username, dbname))
+        if not database_exists(engine.url):
+            create_database(engine.url)
+            logging.info(f"Database {dbname} created successfully.")
 
-    # create a database (if it doesn't exist)
-    if not database_exists(engine.url):
-        create_database(engine.url)
+        Base.metadata.create_all(engine)
 
-    # Actually create the table
-    Base.metadata.create_all(engine)
+        session = sessionmaker(bind=engine)()
+        for table_name, create in config['tables'].items():
+            if create:
+                class_ = globals()[table_name]
+                class_.__table__.create(bind=engine, checkfirst=True)
+                logging.info(f"Table {table_name} created successfully.")
+        session.commit()
+        session.close()
+
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
+
+if __name__ == "__main__":
+    make_database()

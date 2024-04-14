@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "bill-taxonomy-ingest"
+version = "0.1.0"
+description = "The ingestion step of bill taxonomy"
+authors = ["joel <joel.m.piper@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+sqlalchemy = "^2.0.29"
+psycopg2-binary = "^2.9.9"
+boto3 = "^1.34.84"
+requests = "^2.31.0"
+pyyaml = "^6.0.1"
+sqlalchemy-utils = "^0.41.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

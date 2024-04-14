@@ -93,3 +93,10 @@ ENV/
 
 *~
 *.*swp
+
+*.tfstate
+*.tfvars
+secrets.tf
+.terraform/
+.terraform.lock.hcl
+*.tfstate.backup
