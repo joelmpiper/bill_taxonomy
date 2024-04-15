@@ -5,7 +5,7 @@ FROM python:3.10-slim
 WORKDIR /code
 
 # Install Poetry
-RUN pip install poetry
+RUN pip install poetry boto3
 
 # Copy the Poetry configuration files specific to the ingest environment
 COPY ../src/ingest/pyproject.toml ../src/ingest/poetry.lock* /code/
