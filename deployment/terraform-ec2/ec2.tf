@@ -6,6 +6,7 @@ resource "aws_iam_instance_profile" "ec2_profile" {
 resource "aws_instance" "example" {
   ami           = "ami-051f8a213df8bc089"  # Ensure this AMI is valid in your region
   instance_type = "t2.micro"
+  key_name      = "MyKeyPair"  # Referencing the key pair resource
   iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
 
   user_data = file("${path.module}/../ec2_startup.sh")

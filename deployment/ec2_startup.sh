@@ -9,11 +9,11 @@ sudo yum update -y
 
 # Install necessary packages, resolving conflicts if necessary
 sudo yum install -y git aws-cli --allowerasing
-sudo yum install -y curl --exclude=curl-minimal*
+sudo yum install -y curl --allowerasing
 
 # Update and install necessary packages
-sudo amazon-linux-extras install docker -y
-sudo service docker start
+sudo yum install -y docker
+sudo systemctl start docker
 sudo systemctl enable docker
 sudo usermod -a -G docker ec2-user
 
@@ -21,7 +21,7 @@ sudo usermod -a -G docker ec2-user
 mkdir -p /home/ec2-user/repos
 cd /home/ec2-user/repos
 git clone https://github.com/joelmpiper/bill_taxonomy.git
-cd bill_taxonomy/deployment 
+cd bill_taxonomy/src/deployment 
 
 # Set environment variables
 export LOCAL=false
