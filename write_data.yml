@@ -1,0 +1,12 @@
+dbname : bills_db 
+username : Joel 
+
+subject : Bank accounts, deposits, capital
+model_dir : /Users/Joel/Desktop/Insight/bill_taxonomy/models/
+store_us : True
+store_ny : True
+score_column : logistic
+# dbwrite_host : localhost
+dbwrite_host : ec2-52-45-31-100.compute-1.amazonaws.com
+# dbwrite_user : Joel
+dbwrite_user : ubuntu 

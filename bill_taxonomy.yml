@@ -1,0 +1,23 @@
+name: bill_taxonomy
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - Babel
+  - beautifulsoup4
+  - bokeh
+  - click
+  - Flask
+  - jupyter
+  - scikit-learn
+  - pandas
+  - sqlalchemy
+  - sqlalchemy-utils
+  - requests
+  - matplotlib
+  - gensim
+  - textblob
+  - nltk
+  - wordcloud
