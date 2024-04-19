@@ -7,28 +7,36 @@ sudo yum clean all
 # Update system
 sudo yum update -y
 
-# Install necessary packages, resolving conflicts if necessary
-sudo yum install -y git aws-cli --allowerasing
-sudo yum install -y curl --allowerasing
+# Install necessary packages
+sudo yum install -y git aws-cli curl docker python3-virtualenv --allowerasing
 
-# Update and install necessary packages
-sudo yum install -y docker
+# Start and enable Docker
 sudo systemctl start docker
 sudo systemctl enable docker
 sudo usermod -a -G docker ec2-user
 
-# Setup directory for repository and clone
-mkdir -p /home/ec2-user/repos
-cd /home/ec2-user/repos
-git clone https://github.com/joelmpiper/bill_taxonomy.git
-cd bill_taxonomy/src/deployment 
+# Use newgrp to apply the group change immediately
+newgrp docker <<EONG
 
-# Set environment variables
-export LOCAL=false
+# Setup virtual environment for Docker Compose
+mkdir -p /home/ec2-user/repos
+virtualenv /home/ec2-user/docker-compose-env
+source /home/ec2-user/docker-compose-env/bin/activate
 
 # Install Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+pip install docker-compose
+
+# Clone repository
+cd /home/ec2-user/repos
+git clone https://github.com/joelmpiper/bill_taxonomy.git
+cd bill_taxonomy/deployment
+
+export LOCAL=false
 
 # Run Docker Compose
 docker-compose up -d
+
+# Deactivate virtual environment
+deactivate
+
+EONG
