@@ -11,6 +11,8 @@ else
     export AWS_MOUNT="/dev/null"
 fi
 
+echo "LOCAL: $LOCAL"
+echo "AWS_MOUNT: $AWS_MOUNT"
 # Rebuild without cache
 docker-compose build --no-cache
 
