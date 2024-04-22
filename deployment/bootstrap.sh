@@ -8,7 +8,11 @@ export LOCAL=$(yq e '.local' ../configs/postgres_setup.yml)
 if [ "$LOCAL" = "true" ]; then
     export AWS_MOUNT="/Users/joeljoel/.aws:/root/.aws:ro"
 else
-    export AWS_MOUNT="/dev/null"
+    # Create an empty directory for AWS_MOUNT if necessary
+    if [ ! -d "/tmp/aws-mount" ]; then
+        mkdir -p /tmp/aws-mount
+    fi
+    export AWS_MOUNT="/tmp/aws-mount:/root/.aws:ro"  # Use the empty directory
 fi
 
 echo "LOCAL: $LOCAL"
