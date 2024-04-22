@@ -1,6 +1,6 @@
 aws_secret_name: local/dev/postgres/dbCredentials
 environment: development # Change to 'production' as needed
-local: true # Change to false for ec2 runs as needed
+local: false # Change to false for ec2 runs as needed
 
 tables:
   NewYorkBills: true

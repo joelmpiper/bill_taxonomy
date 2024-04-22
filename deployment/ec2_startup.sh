@@ -35,10 +35,8 @@ cd /home/ec2-user/repos
 git clone https://github.com/joelmpiper/bill_taxonomy.git
 cd bill_taxonomy/deployment
 
-export LOCAL=false
-
 # Run Docker Compose
-docker-compose up -d
+./bootstrap.sh
 
 # Deactivate virtual environment
 deactivate
