@@ -17,4 +17,4 @@ echo "Using Compose File: $COMPOSE_FILE"
 docker-compose -f $COMPOSE_FILE build --no-cache
 
 # Now run Docker Compose
-docker-compose -f $COMPOSE_FILE up -d --verbose
+docker-compose -f $COMPOSE_FILE up -d 
