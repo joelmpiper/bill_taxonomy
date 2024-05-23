@@ -19,6 +19,12 @@ sudo chmod +x /usr/local/bin/yq
 sudo curl -L "https://github.com/docker/compose/releases/download/v2.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
+
+# Create location for postgresql data
+sudo mkdir -p /var/lib/postgresql_data
+sudo chown -R $(whoami) /var/lib/postgresql_data
+
+# Move to repo to run setup code
 mkdir -p /home/ec2-user/repos
 # Clone repository
 cd /home/ec2-user/repos

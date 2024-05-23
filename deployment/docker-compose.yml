@@ -1,3 +1,4 @@
+version: "3.8"
 services:
   postgres:
     image: postgres
@@ -15,7 +16,12 @@ services:
       - postgres
     volumes:
       - ./logs:/code/logs
-      - ${AWS_MOUNT:-}
+      - ${AWS_MOUNT:-/dev/null:/dev/null:ro}
 
 volumes:
   postgres_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /var/lib/postgresql_data
+      o: bind

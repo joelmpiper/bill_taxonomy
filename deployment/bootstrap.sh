@@ -21,4 +21,4 @@ echo "AWS_MOUNT: $AWS_MOUNT"
 docker-compose build --no-cache
 
 # Now run Docker Compose
-docker-compose up -d
+docker-compose up -d --verbose
