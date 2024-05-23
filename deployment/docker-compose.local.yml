@@ -1,0 +1,5 @@
+db-init:
+  environment:
+    - DEBUG=1
+  volumes:
+    - /Users/joeljoel/.aws:/root/.aws:ro # Assuming you want to use local AWS credentials

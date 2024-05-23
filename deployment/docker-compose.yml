@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   postgres:
     image: postgres
@@ -16,7 +15,6 @@ services:
       - postgres
     volumes:
       - ./logs:/code/logs
-      - ${AWS_MOUNT:-/dev/null:/dev/null:ro}
 
 volumes:
   postgres_data:
